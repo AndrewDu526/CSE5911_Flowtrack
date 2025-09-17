@@ -1,0 +1,63 @@
+# ---------- OS / IDE ----------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.orig
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+
+# ---------- Android (mobile/) ----------
+mobile/.gradle/
+mobile/local.properties
+mobile/**/build/
+mobile/**/captures/
+mobile/**/.cxx/
+mobile/**/.externalNativeBuild/
+mobile/**/out/
+mobile/**/.idea/
+mobile/**/*.iml
+
+# signing / keystore 
+mobile/**/keystore.properties
+mobile/**/*.jks
+mobile/**/*.keystore
+mobile/**/*.p12
+
+# ---------- Java backend (backend/) ----------
+backend/**/target/
+backend/**/.idea/
+backend/**/*.iml
+
+# ---------- Web Frontend (frontend/) ----------
+frontend/**/node_modules/
+frontend/**/.next/
+frontend/**/.nuxt/
+frontend/**/dist/
+frontend/**/build/
+frontend/**/.output/
+frontend/**/.cache/
+frontend/**/.vite/
+frontend/**/coverage/
+
+# ---------- Python / scripts (scripts/) ----------
+scripts/**/__pycache__/
+scripts/**/.pytest_cache/
+scripts/**/.ipynb_checkpoints/
+scripts/**/.mypy_cache/
+scripts/**/*.pyc
+scripts/**/.venv/
+scripts/**/venv/
+
+# ---------- Infra ----------
+infra/**/.terraform/
+infra/**/terraform.tfstate
+infra/**/terraform.tfstate.*
+infra/**/.terragrunt-cache/
+infra/**/.env
+infra/**/docker-compose.override.yml
+
+# ---------- Logs ----------
+**/*.log
