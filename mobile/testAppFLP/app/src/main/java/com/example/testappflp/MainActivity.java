@@ -43,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
     private static final int BATCH_SIZE = 30;                 // size of batch, packaging when filled up
     private final List<TrackPoint> buffer = new ArrayList<>(); // memory cache
     private final Gson gson = new Gson();                      // packaging
-
     private static final String TAG = "FLP";
     private static final int REQ_LOC = 2001;
     private TextView txt;
     private FusedLocationProviderClient fused;
     private LocationCallback callback;
+
+    // variables for HTTP posting
+    private static final String BASE_URL = "http://100.110.147.24:18081"; // local url, depends on your local server address
+    private static final String POST_PATH = "/FlowTrackServerReceiver"; // port path
+    private final okhttp3.OkHttpClient http = new okhttp3.OkHttpClient();
 
 
     @Override
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             callback = new LocationCallback() {
                 @Override public void onLocationResult(@NonNull LocationResult result) { // @Nonnull, the annotated variable will not be Null
                     Location lastLoc = result.getLastLocation(); // get the last location from a location list;
-                    if (lastLoc != null) log("Update: " + locationFormatter(lastLoc));
+                    // if (lastLoc != null) log("Update: " + locationFormatter(lastLoc));
 
                     // store all locations
                     for(Location loc:result.getLocations()){
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void locationAddToBuffer(Location loc){
 
-        // TODO: better clean/process stratergy
+        // TODO: better clean/process strategy
         if (loc.hasAccuracy() && loc.getAccuracy() > 50f) {
             return;
         }
@@ -164,13 +168,13 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: better packaging conditional check, not only check size
         if (buffer.size() >= BATCH_SIZE) {
-            locationsPackageFromBuffer();
+            packageTrackPointsFromBuffer();
         }
     }
 
     // TODO: better packaging strategy, based on time and size
     // current temp strategy: package all locations once it touches batch size
-    private void locationsPackageFromBuffer(){
+    private void packageTrackPointsFromBuffer(){
         // copy locations
         List<TrackPoint> locations = new ArrayList<>(buffer);
         // clean buffer
@@ -187,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         log("Packed " + locations.size() + " points, json bytes ≈ " + json.length());
 
         saveJsonToFile(json); // temp file saving for check
+        createAndStartPostingThread(json); // TODO: divide functions in diff methods(method names)
     }
 
     private void saveJsonToFile(String json) {
@@ -202,6 +207,36 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             log("Save file error: " + e.getMessage());
         }
+    }
+
+    // HTTP posting json, return respond body
+    private String postingTrackBatchToServer(String url, String json) throws Exception{
+        okhttp3.MediaType JSON = okhttp3.MediaType.get("application/json; charset=utf-8");
+        okhttp3.RequestBody body = okhttp3.RequestBody.create(json, JSON);
+        okhttp3.Request request = new okhttp3.Request.Builder() // Syn posting, thread blocks until receive response or exception
+                .url(url)
+                .post(body)
+                .build();
+
+        try(okhttp3.Response respond = http.newCall(request).execute();){
+            if(!respond.isSuccessful()){throw new RuntimeException("TrackBatch Posting Exception: HTTP " + respond.code());}
+            return respond.body() != null ? respond.body().string() : "";
+        }
+    }
+
+    private void createAndStartPostingThread(String json){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = BASE_URL + POST_PATH;
+                try{
+                    String respond = postingTrackBatchToServer(url, json);
+                    log("POST success to " + url + "\nRespond: " + respond);
+                }catch(Exception e){
+                    log("POST fail to " + url + "\nException: " + e);
+                }
+            }
+        }).start();
     }
 
     private boolean hasLocationPermission() { // check whether activity context has fine location or coarse location permission
