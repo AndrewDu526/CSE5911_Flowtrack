@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ReceiverController {
 
-    // final: can only assign once
+    // final: can only assign onceFlowTrackServerReceiver
     // use Interface type: decouple, Controller does not care how to implement, only care about available method
     private final ReceiverService receiveService;
 
