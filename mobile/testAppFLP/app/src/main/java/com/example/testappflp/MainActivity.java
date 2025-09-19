@@ -40,7 +40,7 @@ import models.TrackPoint;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static final int BATCH_SIZE = 30;                 // size of batch, packaging when filled up
+    private static final int BATCH_SIZE = 100;                 // size of batch, packaging when filled up
     private final List<TrackPoint> buffer = new ArrayList<>(); // memory cache
     private final Gson gson = new Gson();                      // packaging
     private static final String TAG = "FLP";
