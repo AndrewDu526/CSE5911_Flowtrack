@@ -1,0 +1,306 @@
+{
+  "batchId" : "9e937bbd-4b2f-4a81-977f-1186326b3aa9",
+  "locations" : [ {
+    "tWall" : 1758313340297,
+    "tElapsedNs" : 653728012666798,
+    "lat" : 39.9985462,
+    "lon" : -83.039032,
+    "acc" : 10.754,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313343357,
+    "tElapsedNs" : 653731073002474,
+    "lat" : 39.9985435,
+    "lon" : -83.0389619,
+    "acc" : 8.993,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313345721,
+    "tElapsedNs" : 653733436765077,
+    "lat" : 39.9985271,
+    "lon" : -83.0389682,
+    "acc" : 15.727,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313347828,
+    "tElapsedNs" : 653735543166118,
+    "lat" : 39.9985145,
+    "lon" : -83.0389542,
+    "acc" : 18.643,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313349943,
+    "tElapsedNs" : 653737658645648,
+    "lat" : 39.9985194,
+    "lon" : -83.0389238,
+    "acc" : 21.511,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313351974,
+    "tElapsedNs" : 653739689810231,
+    "lat" : 39.9985127,
+    "lon" : -83.0389223,
+    "acc" : 20.944,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313353965,
+    "tElapsedNs" : 653741680580282,
+    "lat" : 39.9985282,
+    "lon" : -83.0389095,
+    "acc" : 20.166,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313356043,
+    "tElapsedNs" : 653743758437104,
+    "lat" : 39.998496,
+    "lon" : -83.0389377,
+    "acc" : 18.798,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313357923,
+    "tElapsedNs" : 653745638863458,
+    "lat" : 39.9985087,
+    "lon" : -83.038936,
+    "acc" : 18.773,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313359831,
+    "tElapsedNs" : 653747546331634,
+    "lat" : 39.9985316,
+    "lon" : -83.0389278,
+    "acc" : 18.967,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313361898,
+    "tElapsedNs" : 653749613763039,
+    "lat" : 39.9985379,
+    "lon" : -83.0389536,
+    "acc" : 19.026,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313364006,
+    "tElapsedNs" : 653751721169028,
+    "lat" : 39.998571,
+    "lon" : -83.0389598,
+    "acc" : 18.094,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313366116,
+    "tElapsedNs" : 653753831639965,
+    "lat" : 39.998588,
+    "lon" : -83.0389586,
+    "acc" : 16.958,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313367970,
+    "tElapsedNs" : 653755685421527,
+    "lat" : 39.9986064,
+    "lon" : -83.038948,
+    "acc" : 17.052,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313370031,
+    "tElapsedNs" : 653757746624078,
+    "lat" : 39.9986331,
+    "lon" : -83.0389409,
+    "acc" : 17.469,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313371951,
+    "tElapsedNs" : 653759666096265,
+    "lat" : 39.9986724,
+    "lon" : -83.0389565,
+    "acc" : 15.12,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313373928,
+    "tElapsedNs" : 653761643454233,
+    "lat" : 39.9987088,
+    "lon" : -83.0389615,
+    "acc" : 11.281,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313376093,
+    "tElapsedNs" : 653763808769649,
+    "lat" : 39.998739,
+    "lon" : -83.0389542,
+    "acc" : 6.965,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313378182,
+    "tElapsedNs" : 653765898041627,
+    "lat" : 39.9987646,
+    "lon" : -83.0389363,
+    "acc" : 5.361,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313380225,
+    "tElapsedNs" : 653767940191678,
+    "lat" : 39.9987818,
+    "lon" : -83.038899,
+    "acc" : 5.432,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313382670,
+    "tElapsedNs" : 653770385865063,
+    "lat" : 39.9987939,
+    "lon" : -83.0388604,
+    "acc" : 5.528,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313384633,
+    "tElapsedNs" : 653772348568187,
+    "lat" : 39.9987834,
+    "lon" : -83.0388233,
+    "acc" : 5.995,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313388184,
+    "tElapsedNs" : 653775899325946,
+    "lat" : 39.9987567,
+    "lon" : -83.0387897,
+    "acc" : 6.644,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313390260,
+    "tElapsedNs" : 653777975455060,
+    "lat" : 39.9987479,
+    "lon" : -83.0387853,
+    "acc" : 7.374,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313392361,
+    "tElapsedNs" : 653780076111257,
+    "lat" : 39.9987421,
+    "lon" : -83.038759,
+    "acc" : 6.719,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313395205,
+    "tElapsedNs" : 653782920913027,
+    "lat" : 39.9987476,
+    "lon" : -83.0387548,
+    "acc" : 6.415,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313397582,
+    "tElapsedNs" : 653785297716047,
+    "lat" : 39.9987659,
+    "lon" : -83.038766,
+    "acc" : 7.046,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313400230,
+    "tElapsedNs" : 653787946032400,
+    "lat" : 39.9987845,
+    "lon" : -83.0387699,
+    "acc" : 7.97,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313402573,
+    "tElapsedNs" : 653790288111045,
+    "lat" : 39.9988302,
+    "lon" : -83.0387618,
+    "acc" : 8.59,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  }, {
+    "tWall" : 1758313404450,
+    "tElapsedNs" : 653792166041669,
+    "lat" : 39.9988386,
+    "lon" : -83.0387381,
+    "acc" : 9.663,
+    "provider" : "fused",
+    "source" : "flp",
+    "priority" : "fine",
+    "floor" : null
+  } ],
+  "employee" : null,
+  "device" : null
+}
