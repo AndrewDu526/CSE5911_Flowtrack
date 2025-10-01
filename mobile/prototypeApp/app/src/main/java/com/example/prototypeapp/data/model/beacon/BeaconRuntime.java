@@ -7,6 +7,8 @@ public class BeaconRuntime {
     public double rssi;
     public double distance;
     public RssiSmoother smoother;
+    public long lastSeenMs = 0;
+    public int  counter = 0;
 
     public BeaconRuntime(StaticBeacon beacon, double rssi, double distance, RssiSmoother smoother) {
         this.beacon = beacon;

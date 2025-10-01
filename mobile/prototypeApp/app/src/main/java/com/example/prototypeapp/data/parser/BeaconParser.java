@@ -20,7 +20,7 @@ public class BeaconParser {
             if (p != null && p.length >= 23 && (p[0]==0x02) && (p[1]==0x15)) {
                 String uuid = bytesToUuid(Arrays.copyOfRange(p,2,18)).toString().toLowerCase();
                 int major = u16(p,18), minor = u16(p,20);
-                return new BeaconId("iBeacon", uuid, major, minor);
+                return new BeaconId("ibeacon", uuid, major, minor);
             }
         }
         return null;

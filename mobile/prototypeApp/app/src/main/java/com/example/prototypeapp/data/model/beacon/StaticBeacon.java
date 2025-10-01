@@ -2,7 +2,7 @@ package com.example.prototypeapp.data.model.beacon;
 
 public class StaticBeacon {
 
-    BeaconId id;
+    public BeaconId id;
     String name;
     public double x;
     public double y;

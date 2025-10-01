@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.prototypeapp.R;
 import com.example.prototypeapp.data.model.TrackBatch;
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     final int UPDATE_INTERVAL_MS = 500;
     private List<TrackPoint> pointBuffer = new ArrayList<>();
     private static final int BATCH_SIZE = 100;
-    private int batchCounter = 0;
     int pointCount = 0;
 
     Map<String, StaticBeacon> beaconRepository = new HashMap<>(); // sign up stable beacons
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<String[]> permissionLauncher;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // 强制禁用夜间
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -126,28 +127,30 @@ public class MainActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> tryStart());
         btnStop.setOnClickListener(v -> stopScan());
+        txtStatus.append("onCreate(): initialization done");
     }
 
     private void initialBeacons() {
         String uuid = "426c7565-4368-6172-6d42-6561636f6e73";
 
-        StaticBeacon beacon1 = new StaticBeacon(new BeaconId("iBeacon",uuid,10001,1), "test_beacon_1_bedroom", -160*0.0254,280*0.0254);
-        StaticBeacon beacon2 = new StaticBeacon(new BeaconId("iBeacon",uuid,10001,2), "test_beacon_1_bedroom", 155*0.0254,258*0.0254);
-        StaticBeacon beacon3 = new StaticBeacon(new BeaconId("iBeacon",uuid,10001,3), "test_beacon_1_bedroom", 300*0.0254,280*0.0254);
-        StaticBeacon beacon4 = new StaticBeacon(new BeaconId("iBeacon",uuid,10001,4), "test_beacon_1_bedroom", 60*0.0254,110*0.0254);
-        StaticBeacon beacon5 = new StaticBeacon(new BeaconId("iBeacon",uuid,10001,5), "test_beacon_1_bedroom", 0,0);
-        StaticBeacon beacon6 = new StaticBeacon(new BeaconId("iBeacon",uuid,10001,6), "test_beacon_1_bedroom", 240*0.0254,0);
+        StaticBeacon beacon1 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,1), "test_beacon_1_bedroom", -160*0.0254,280*0.0254);
+        StaticBeacon beacon2 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,2), "test_beacon_1_bedroom", 155*0.0254,258*0.0254);
+        StaticBeacon beacon3 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,3), "test_beacon_1_bedroom", 300*0.0254,280*0.0254);
+        StaticBeacon beacon4 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,4), "test_beacon_1_bedroom", 60*0.0254,110*0.0254);
+        StaticBeacon beacon5 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,5), "test_beacon_1_bedroom", 0,0);
+        StaticBeacon beacon6 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,6), "test_beacon_1_bedroom", 240*0.0254,0);
 
-        beaconRepository.put(beacon1.toString(), beacon1);
-        beaconRepository.put(beacon2.toString(), beacon2);
-        beaconRepository.put(beacon3.toString(), beacon3);
-        beaconRepository.put(beacon4.toString(), beacon4);
-        beaconRepository.put(beacon5.toString(), beacon5);
-        beaconRepository.put(beacon6.toString(), beacon6);
+        beaconRepository.put(beacon1.id.toString(), beacon1);
+        beaconRepository.put(beacon2.id.toString(), beacon2);
+        beaconRepository.put(beacon3.id.toString(), beacon3);
+        beaconRepository.put(beacon4.id.toString(), beacon4);
+        beaconRepository.put(beacon5.id.toString(), beacon5);
+        beaconRepository.put(beacon6.id.toString(), beacon6);
 
     }
 
     private void tryStart() {
+        txtStatus.append("tryStart(): try scanning");
         if (btAdapter == null || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) return;
 
         // once user click start button, call tryStart()
@@ -163,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             permissionLauncher.launch(permsApi31Plus);
             return;
         }
-        txtStatus.setText("Scanning tried");
         startScan();
     }
 
@@ -176,28 +178,30 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void startScan() {
+        txtStatus.append("startScan(): start scanning");
         if (scanning) return;
         if (bleScanner == null) bleScanner = btAdapter.getBluetoothLeScanner();
         if (bleScanner == null) return;
 
         // empty filter now, try listen signals as much as possible
+        //List<ScanFilter> filters = null;
         ScanFilter filter = new ScanFilter.Builder()
                 .setManufacturerData(APPLE_ID, new byte[]{0x02, 0x15}) // Apple iBeacon
                 .build();
 
         List<ScanFilter> filters = Collections.singletonList(filter); // filter setting on hardware level, like MAC address, UUID, service data...
 
+
+
         ScanSettings settings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY) // LOW_LATENCY: high frequency, high power cost (LOW_POWER, BALANCE)
                 .build();
-
+        txtStatus.append("startScan():  start scan function");
         // start scanning: once system update/find a b
         bleScanner.startScan(filters, settings, scanCb);
         scanning = true;
 
         PositioningProcess();
-        txtStatus.setText("Scanning started");
-
     }
 
     @SuppressLint("MissingPermission")
@@ -206,15 +210,14 @@ public class MainActivity extends AppCompatActivity {
         timer.removeCallbacksAndMessages(null);
         bleScanner.stopScan(scanCb);
         scanning = false;
-        Log.i(TAG, "Scan stopped");
-        txtStatus.setText("Scanning stopped");
+        txtStatus.append("stopScan():  stop scan");
     }
 
 
     private final ScanCallback scanCb = new ScanCallback() {
         @Override public void onScanResult(int callbackType, @NonNull ScanResult r) { scanProcess(r); }
         @Override public void onScanFailed(int errorCode) {
-            Log.e(TAG, "Scan failed: " + errorCode);
+            txtStatus.append("scanCb():   fail");
         }
     };
 
@@ -231,9 +234,20 @@ public class MainActivity extends AppCompatActivity {
         if (beaconRepository.containsKey(beaconId)) {
 
             StaticBeacon beacon = beaconRepository.get(beaconId);
+
             if(beacon!=null){
 
-                BeaconRuntime beaconRuntime = new BeaconRuntime(beacon, 0, 0, new CombinedSmoother());
+                long now = System.currentTimeMillis();
+
+                BeaconRuntime beaconRuntime = beaconRuntimeMap.get(beaconId);
+
+                if (beaconRuntime == null) {
+                    beaconRuntime = new BeaconRuntime(beacon, 0, 0, new CombinedSmoother());
+                    beaconRuntimeMap.put(beaconId,beaconRuntime);
+                    txtStatus.append("scanProcess():   new beacon add to map: "+ beaconId);
+                    txtStatus.append("scanProcess():   current map size: "+ beaconRuntimeMap.size());
+                }
+
                 beaconRuntime.smoother.addSingleRssi(rssi);
                 double smoothedRssi = beaconRuntime.smoother.getSmoothedRssi();
                 double distance = distanceEstimator.estimateDistance(smoothedRssi);
@@ -241,9 +255,11 @@ public class MainActivity extends AppCompatActivity {
                 beaconRuntime.rssi = smoothedRssi;
                 beaconRuntime.distance = distance;
 
-                beaconRuntimeMap.put(beaconId,beaconRuntime);
+                beaconRuntime.lastSeenMs = now;
+                beaconRuntime.counter++;
+
             }else{
-                Log.w("BLE", "Unregistered beacon found: " + beaconId);
+                txtStatus.append("scanProcess():   beacon is null");
             }
         }
     }
@@ -252,13 +268,26 @@ public class MainActivity extends AppCompatActivity {
         timer.postDelayed(new Runnable() {
             @Override
             public void run() {
+                txtStatus.append("PositioningProcess():   start positioning");
+
+                final long FRESH_MS = 2000;
+                final int  MIN_SAMPLES = 3;
+                long now = System.currentTimeMillis();
+
                 ArrayList<String> effectiveBeacons = new ArrayList<>();
                 //filter beacons:
+                txtStatus.append("PositioningProcess():   start filtering");
+                pointCount++;
+
                 for (String id : beaconRuntimeMap.keySet()) {
+
                     BeaconRuntime b = beaconRuntimeMap.get(id);
 
-                    if (b.rssi < -90) continue;
-                    // TODO: More Filters: time, stability...
+                    if (b == null) continue;
+                    //if (b.rssi < -90) continue;
+                    //if ((now - b.lastSeenMs) > FRESH_MS) continue;
+                    //if (b.counter < MIN_SAMPLES) continue;
+
                     effectiveBeacons.add(id);
                 }
                 effectiveBeacons.sort((b1, b2) -> Double.compare(beaconRuntimeMap.get(b2).rssi, beaconRuntimeMap.get(b1).rssi));
@@ -270,27 +299,30 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (effectiveBeacons.size() >= N_MIN) {
-
+                    txtStatus.append("PositioningProcess():   effective beacons >= MIN");
                     ArrayList<BeaconRuntime> temp = new ArrayList<>();
                     for (String id : effectiveBeacons) {
                         BeaconRuntime b = beaconRuntimeMap.get(id);
                         if (b != null) temp.add(b);
                     }
 
-
+                    txtStatus.append("PositioningProcess():   start estimating");
                     LocationEstimate locationEstimate = locationEstimator.estimate(temp);
+
+                    txtStatus.append("PositioningProcess():   start kalman filter");
                     TrackPoint p = kalmanAdaptiveFilter.step(locationEstimate.x, locationEstimate.y, locationEstimate.timeStamp,locationEstimate.effectiveBeacons,locationEstimate.rms);
 
                     pointBuffer.add(p);
-                    pointCount++;
-                    txtCount.setText("Points: " + pointCount);
+
 
                     if (pointBuffer.size() >= BATCH_SIZE) {
+
+                        String id = "batch_" + System.currentTimeMillis();
 
                         TrackBatch batch = new TrackBatch("Room 2320", "3rd floor",
                                 "Altitude Columbus", 50, 0,1,
                                 pointBuffer, "test_local_map", "BLT+Kalman", "10001",
-                                "OnePlusThreePJE110-15","batch_no.1_test");
+                                "OnePlusThreePJE110-15", id);
 
                         saveBatchToFile(batch);
                         pointBuffer.clear();
@@ -298,8 +330,10 @@ public class MainActivity extends AppCompatActivity {
 
                     timer.postDelayed(this, UPDATE_INTERVAL_MS); // recursive call
                 }else {
+                    txtStatus.append("PositioningProcess():   effective beacons not enough, only has "+effectiveBeacons.size());
                     // TODO: Back up functions: FLP, Centroid...
                 }
+                timer.postDelayed(this, UPDATE_INTERVAL_MS);
             }
         }, UPDATE_INTERVAL_MS);}
 
@@ -314,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
 
             try (FileWriter writer = new FileWriter(out)) {
                 writer.write(json);
-                txtStatus.setText("batch saved: "+ batch.batchId);
+                txtStatus.append("saveBatchToFile():   saved");
             } catch (IOException e) {
                 Log.e("TRACK", "Failed to write batch file", e);
             }
