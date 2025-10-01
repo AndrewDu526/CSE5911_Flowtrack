@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         btnStop.setOnClickListener(v -> stopUpdates());
     }
 
+    // TODO: replaced by Launcher, used in BLT demo
     private void getOneTimeLocation() {
         // check whether has permission, if not, request
         if (!hasLocationPermission()) {requestLocationPermission(); return;} // Asynchronous
