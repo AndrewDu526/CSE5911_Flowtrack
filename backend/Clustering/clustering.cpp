@@ -69,7 +69,6 @@ std::vector<std::vector<Data>> kMeans(const int k, std::vector<Data> vec) {
 
           for(int l = 0; l < max_iter; l++) {
            
-            // Why does this exist exaclty lol
             for(int i = 0; i < k; i++) {
                 Data centroid = clus_list[i][0];  
                 clus_list[i].clear();
@@ -77,6 +76,7 @@ std::vector<std::vector<Data>> kMeans(const int k, std::vector<Data> vec) {
             }
 
             for(int i = 0; i < vec.size(); i++) {
+                // TODO - i think we can remove this
                 if(clustersContains(vec[i], clus_list)) // avoid centroids
                     continue;
 
@@ -84,7 +84,6 @@ std::vector<std::vector<Data>> kMeans(const int k, std::vector<Data> vec) {
                 Data curr_coords = vec[i];
                 std::set<DistIndx> srt_distances; 
                 //std::unordered_set<DistIndx, DistIndxHash> 
-                
                 /* 
                  * Closest centroid search
                  */
