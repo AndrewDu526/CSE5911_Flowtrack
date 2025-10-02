@@ -46,24 +46,25 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity {
 
     int APPLE_ID = 0x004C;
-
+    private static final String BASE_URL = "http://100.110.147.24:18081"; // local url, depends on your local server address
+    private static final String POST_PATH = "/FlowTrackServerListenerToMobile"; // port path
     private static final String TAG = "BEACON";
-    private Button btnStart, btnStop;
+    private static final int BATCH_SIZE = 60;
+    int pointCount = 0;
+    final int UPDATE_INTERVAL_MS = 1000;
+    private boolean scanning = false;
 
+    private Button btnStart, btnStop;
     private BluetoothAdapter btAdapter;
     private BluetoothLeScanner bleScanner;
     private TextView txtStatus, txtCount;
-    private boolean scanning = false;
-    final Handler timer = new Handler(Looper.getMainLooper());
-    final int UPDATE_INTERVAL_MS = 500;
-    private List<TrackPoint> pointBuffer = new ArrayList<>();
-    private static final int BATCH_SIZE = 100;
-    int pointCount = 0;
 
+    private final Gson gson = new Gson();
+    final Handler timer = new Handler(Looper.getMainLooper());
+    private List<TrackPoint> pointBuffer = new ArrayList<>();
+    private final okhttp3.OkHttpClient http = new okhttp3.OkHttpClient();
     Map<String, StaticBeacon> beaconRepository = new HashMap<>(); // sign up stable beacons
     Map<String, BeaconRuntime> beaconRuntimeMap = new HashMap<>();
-
-    RssiSmoother rssiSmoother = new CombinedSmoother();
     DistanceEstimator distanceEstimator = new LogDistanceEstimator();
     LocationEstimator locationEstimator = new WeightedLeastSquareEstimator();
     KalmanAdaptiveFilter kalmanAdaptiveFilter = new KalmanAdaptiveFilter();
@@ -325,10 +326,9 @@ public class MainActivity extends AppCompatActivity {
                                 "OnePlusThreePJE110-15", id);
 
                         saveBatchToFile(batch);
+                        //createAndStartPostingThread(gson.toJson(batch));
                         pointBuffer.clear();
                     }
-
-                    timer.postDelayed(this, UPDATE_INTERVAL_MS); // recursive call
                 }else {
                     txtStatus.append("PositioningProcess():   effective beacons not enough, only has "+effectiveBeacons.size());
                     // TODO: Back up functions: FLP, Centroid...
@@ -352,6 +352,35 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 Log.e("TRACK", "Failed to write batch file", e);
             }
+    }
+
+    private void createAndStartPostingThread(String json){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = BASE_URL + POST_PATH;
+                try{
+                    String respond = postBatchToServer(url, json);
+                    //log("POST success to " + url + "\nRespond: " + respond);
+                }catch(Exception e){
+                    //log("POST fail to " + url + "\nException: " + e);
+                }
+            }
+        }).start();
+    }
+
+    private String postBatchToServer(String url, String json) throws Exception{
+        okhttp3.MediaType JSON = okhttp3.MediaType.get("application/json; charset=utf-8");
+        okhttp3.RequestBody body = okhttp3.RequestBody.create(json, JSON);
+        okhttp3.Request request = new okhttp3.Request.Builder() // Syn posting, thread blocks until receive response or exception
+                .url(url)
+                .post(body)
+                .build();
+
+        try(okhttp3.Response respond = http.newCall(request).execute();){
+            if(!respond.isSuccessful()){throw new RuntimeException("TrackBatch Posting Exception: HTTP " + respond.code());}
+            return respond.body() != null ? respond.body().string() : "";
+        }
     }
 }
 

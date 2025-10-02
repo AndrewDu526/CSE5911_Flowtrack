@@ -73,7 +73,7 @@ public class KalmanAdaptiveFilter {
     public TrackPoint step(double measX, double measY, long timestampMs, int effectiveAnchors, double wlsRmsResidual) {
         if (kf == null) {
             init(measX, measY, timestampMs);
-            return new TrackPoint(timestampMs, measX, measY, true, effectiveAnchors, wlsRmsResidual, 0);
+            return new TrackPoint(timestampMs, measX, measY, true, effectiveAnchors, 0, wlsRmsResidual, 0);
         }
 
         // 1) calculate dt
@@ -95,7 +95,7 @@ public class KalmanAdaptiveFilter {
         // 4) predict
         kf.predict();
 
-        // 5) door control
+        // 5) gate control
         RealVector xPred = new ArrayRealVector(kf.getStateEstimation());           // double[] -> RealVector
         RealMatrix PPred = new Array2DRowRealMatrix(kf.getErrorCovariance());      // double[][] -> RealMatrix
         RealVector z     = new ArrayRealVector(new double[]{measX, measY});
@@ -112,7 +112,12 @@ public class KalmanAdaptiveFilter {
 
         // 6) get state and cor
         pullFromKF();
-        return new TrackPoint(timestampMs, measX, measY, accepted, effectiveAnchors, wlsRmsResidual, dt);
+
+        // 7) get speed
+        double[] s = kf.getStateEstimation(); // [x, y, vx, vy]
+        double speed = Math.hypot(s[2], s[3]); // m/s
+
+        return new TrackPoint(timestampMs, measX, measY, accepted, effectiveAnchors, speed, wlsRmsResidual, dt);
     }
 
     // ================== 工具 & 自适应 R ==================

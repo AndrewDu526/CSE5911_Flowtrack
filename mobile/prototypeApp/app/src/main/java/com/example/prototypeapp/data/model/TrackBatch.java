@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrackBatch {
-    // —— 标识 & 设置 ——
+
     public String batchId;
     public String deviceId;
     public String sessionId;
     public String source;
     public String coordRef;
 
-    public List<TrackPoint> points = new ArrayList<>();
+    public List<TrackPoint> points;
 
     public long startTimeMs;
     public long endTimeMs;

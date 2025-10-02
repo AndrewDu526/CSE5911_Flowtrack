@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.apache.commons:commons-math3:3.6.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
