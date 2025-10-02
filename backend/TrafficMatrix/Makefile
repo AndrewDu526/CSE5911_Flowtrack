@@ -3,14 +3,18 @@ CXX = g++
 CXXFLAGS = -std=c++11 -O3 -Wall -Wextra -fopenmp
 
 # Target executable
-TARGET = clustering
+TARGET = trafficmatrix
 
 # Source and object files
-SOURCES = clustering.cpp
+SOURCES = traffic_matrix.cpp \
+		  point_in_polygon.cpp \
+		  core_tm.cpp 
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Header files
-HEADERS = clustering.h
+HEADERS = point_in_polygon.h\
+		  traffic_matrix.h\
+		  .\..\projutils.h
 
 # Default target
 all: $(TARGET)

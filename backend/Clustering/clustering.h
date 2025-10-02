@@ -1,34 +1,7 @@
 #ifndef CLUSTERING_H
 #define CLUSTERING_H
 
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <vector>
-#include <chrono>
-#include <set>
-#include <algorithm>
-#include <cmath>
-#include <random>
-
-constexpr float MAX_FLOAT = std::numeric_limits<float>::max();
-
-struct Data {
-    float x;
-    float y;
-    
-    Data() = default;
-    Data(float xx, float yy) : x(xx), y(yy) {}
-
-    Data(const Data&) = default;                // copy constructor
-    Data(Data&&) noexcept = default;            // move constructor
-    Data& operator=(const Data&) = default;     // Copy assignment -> const as we do not modify the original
-    Data& operator=(Data&&) noexcept = default; // move assignemnt -> not const since we empty the original
-
-    bool operator==(const Data& other) const noexcept { 
-        return x == other.x && y == other.y;
-    }
-};
+#include ".\..\projutils.h"
 
 struct DistIndx {
     float _dist;
@@ -41,7 +14,7 @@ struct DistIndx {
     DistIndx(DistIndx&&) noexcept = default;            // move constructor
     DistIndx& operator=(const DistIndx&) = default;     // Copy assignment 
     DistIndx& operator=(DistIndx&&) = default;          // move assignemnt
-
+                                                        
     bool operator<(const DistIndx& other) const noexcept {
         return _dist == other._dist ? _indx < other._indx : _dist < other._dist;
     }
@@ -82,8 +55,6 @@ struct ClusterData {
         return inertia_cmpr && _2D_vector_cmpr;
     }
 };
-
-
 
 bool clustersContains(Data val, std::vector<std::vector<Data>> vec);
 std::vector<std::vector<Data>> kMeans(const int k, std::vector<Data> vec);
