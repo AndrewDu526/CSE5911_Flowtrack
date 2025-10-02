@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface LocalRepository {
 
+    public void loadCsv()  throws Exception;
     public FloorMap loadMapSetting(String dir, String fileName);
 
     public List<Batch> loadBatches(String dir, int size);

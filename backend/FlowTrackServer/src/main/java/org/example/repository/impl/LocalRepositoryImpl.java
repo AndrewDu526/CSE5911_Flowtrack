@@ -2,10 +2,18 @@ package org.example.repository.impl;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.example.model.bundle.Batch;
 import org.example.model.map.FloorMap;
+import org.example.model.map.Meta;
+import org.example.model.map.Room;
+import org.example.model.map.Vertex;
 import org.example.repository.LocalRepository;
 import org.springframework.stereotype.Repository;
+
+import com.opencsv.CSVReader;
+import java.io.File;
+import java.io.FileReader;
 import java.nio.file.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +31,90 @@ import java.util.List;
 public class LocalRepositoryImpl implements LocalRepository {
 
     private final ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+    @Override
+    public void loadCsv()  throws Exception{
+
+        String inputDir = "localRepository/input/csv";
+        String outputDir = "localRepository/input/maps";
+
+        File folder = new File(inputDir);
+        if (!folder.exists() || !folder.isDirectory()) {throw new IllegalArgumentException("Input directory does not exist: " + inputDir);}
+
+        File outFolder = new File(outputDir);
+        if (!outFolder.exists()) {outFolder.mkdirs();}
+
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+
+        File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".csv"));
+        if (files == null || files.length == 0) {System.out.println("No CSV files found in: " + inputDir);return;}
+
+        for (File csvFile : files) {
+            FloorMap floorMap = new FloorMap();
+            try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
+                String[] line;
+
+                while ((line = reader.readNext()) != null) {
+                    if (line.length == 0 || line[0].trim().equalsIgnoreCase("id")) {
+                        break;
+                    }
+                    String key = line[0].trim();
+                    String value = (line.length > 1) ? line[1].trim() : "";
+
+                    switch (key) {
+                        case "map_id": floorMap.map_id = value; break;
+                        case "floor_id": floorMap.floor_id = value; break;
+                        case "building_id": floorMap.building_id = value; break;
+                        case "name": floorMap.name = value; break;
+                        case "description": floorMap.description = value; break;
+                        case "units": floorMap.units = value; break;
+                        case "crs": floorMap.crs = value; break;
+                        case "meta_version":
+                            if (floorMap.meta == null) floorMap.meta = new Meta();
+                            floorMap.meta.map_version = value;
+                            break;
+                        case "meta_author":
+                            if (floorMap.meta == null) floorMap.meta = new Meta();
+                            floorMap.meta.author = value;
+                            break;
+                    }
+                }
+
+                if (floorMap.meta == null) floorMap.meta = new Meta();
+                floorMap.meta.created_at = LocalDate.now().toString();
+                floorMap.rooms = new ArrayList<>();
+                floorMap.doorways = new ArrayList<>();
+
+                while ((line = reader.readNext()) != null) {
+                    if (line.length == 0) continue;
+
+                    Room room = new Room();
+                    room.id = line[0];
+                    room.name = line[1];
+                    room.type = line[2];
+                    room.vertices = new ArrayList<>();
+
+                    for (int i = 3; i < line.length; i += 2) {
+                        if (i + 1 >= line.length || line[i].isEmpty() || line[i+1].isEmpty()) break;
+                        double x = Double.parseDouble(line[i]);
+                        double y = Double.parseDouble(line[i + 1]);
+                        room.vertices.add(new Vertex(x, y));
+                    }
+                    floorMap.rooms.add(room);
+                }
+            }
+
+            String baseName = (floorMap.name != null && !floorMap.name.isEmpty())
+                    ? floorMap.name
+                    : csvFile.getName().replace(".csv", "");
+
+            File outFile = new File(outputDir, baseName + ".json");
+            mapper.writeValue(outFile, floorMap);
+
+            System.out.println("Converted: " + csvFile.getName() + " → " + outFile.getAbsolutePath());
+        }
+    }
+
     @Override
     public FloorMap loadMapSetting(String dir, String fileName){
 

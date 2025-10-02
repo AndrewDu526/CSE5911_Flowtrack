@@ -1,0 +1,13 @@
+map_id,room_2320
+floor_id,3rd floor
+building_id,Altitude_Columbus_1150_Kinear_road
+name,test_map_001
+description,a 3b3b student apartment floor plan
+units,m
+crs,absent, ignore
+meta_version,1.0
+meta_author,Changan Du
+id,name,type,x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8
+room_A,bedroom,room,-48.768,85.344,18.288,85.344,18.288,33.528,-48.768,0.0,,,,,,,,
+room_B,meeting room,room,18.288,85.344,57.912,85.344,57.912,33.528,73.152,33.528,73.152,0.0,0.0,0.0,0.0,33.528,18.288,33.528
+room_C,study room,room,57.912,85.344,91.44,85.344,91.44,33.528,57.912,33.528,,,,,,,,

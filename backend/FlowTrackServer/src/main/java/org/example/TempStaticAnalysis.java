@@ -29,6 +29,7 @@ public class TempStaticAnalysis {
 
     Meta meta = new Meta();
     LocalRepository repo = new LocalRepositoryImpl();
+    repo.loadCsv();
     DataPreprocessingModule preprocessor = new DataPreprocessingModule();
     MapLoadingModule mapLoader = new MapLoadingModule(repo);
     RoomMatchingModule roomMatcher = new RoomMatchingModule(mapLoader);
