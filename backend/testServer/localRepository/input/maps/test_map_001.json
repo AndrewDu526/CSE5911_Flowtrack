@@ -1,0 +1,53 @@
+{
+  "map_id": "room_2320",
+  "floor_id": "3rd floor",
+  "building_id": "Altitude_Columbus_1150_Kinear_road",
+  "name": "test_map_001",
+  "description": "a 3b3b student apartment floor plan",
+  "units": "m",
+  "crs": "absent, ignore",
+  "rooms": [
+    {
+      "id": "room_A",
+      "name": "bedroom",
+      "type": "room",
+      "vertices": [
+        { "x": -48.768000, "y": 85.344000 },
+        { "x": 18.288000,  "y": 85.344000 },
+        { "x": 18.288000,  "y": 33.528000 },
+        { "x": -48.768000, "y": 0.000000 }
+      ]
+    },
+    {
+      "id": "room_B",
+      "name": "meeting room",
+      "type": "room",
+      "vertices": [
+        { "x": 18.288000, "y": 85.344000 },
+        { "x": 57.912000, "y": 85.344000 },
+        { "x": 57.912000, "y": 33.528000 },
+        { "x": 73.152000, "y": 33.528000 },
+        { "x": 73.152000, "y": 0.000000 },
+        { "x": 0.000000,  "y": 0.000000 },
+        { "x": 0.000000,  "y": 33.528000 },
+        { "x": 18.288000, "y": 33.528000 }
+      ]
+    },
+    {
+      "id": "room_C",
+      "name": "study room",
+      "type": "room",
+      "vertices": [
+        { "x": 57.912000, "y": 85.344000 },
+        { "x": 91.440000, "y": 85.344000 },
+        { "x": 91.440000, "y": 33.528000 },
+        { "x": 57.912000, "y": 33.528000 }
+      ]
+    }
+  ],
+  "meta": {
+    "map_version": "1.0",
+    "created_at": "2025-10-02",
+    "author": "Changan Du"
+  }
+}

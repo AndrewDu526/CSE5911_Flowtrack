@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
- * Spring Boot 启动类：
+ * Spring Boot
  * - @SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
- * - @EnableConfigurationProperties 让 @ConfigurationProperties 生效
+ * - @EnableConfigurationProperties make @ConfigurationProperties works
  */
 @SpringBootApplication
 public class FlowTrackServerApplication {

@@ -1,9 +1,9 @@
 package org.example.controller;
 
 
-import org.example.model.RespondToMobile;
-import org.example.model.TrackBatch;
-import org.example.service.ReceiverService;
+import org.example.model.bundle.Batch;
+import org.example.model.internet.RespondToMobile;
+import org.example.service.listerning.ReceiverService;
 
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,9 @@ public class ReceiverController {
         this.receiveService = service;
     }
 
-    @PostMapping("/FlowTrackServerReceiver") // auto listen port:3000 with path FlowTrackServerReceiver
+    @PostMapping("/FlowTrackServerListenerToMobile") // auto listen port:3000 with path FlowTrackServerReceiver
     // @RequestBody auto transfer HTTP body json to assigned data type: TrackBatch
-    public ResponseEntity<RespondToMobile> receive(@Valid @RequestBody TrackBatch batch) throws Exception {
+    public ResponseEntity<RespondToMobile> receive(@Valid @RequestBody Batch batch) throws Exception {
         RespondToMobile respond = receiveService.receiveBatchFromMobile(batch);
         // ResponseEntity: state code, response head and body
         // response body transfer to json
