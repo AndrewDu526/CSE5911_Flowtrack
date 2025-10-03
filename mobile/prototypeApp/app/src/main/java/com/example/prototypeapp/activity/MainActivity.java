@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "http://100.110.147.24:18081"; // local url, depends on your local server address
     private static final String POST_PATH = "/FlowTrackServerListenerToMobile"; // port path
     private static final String TAG = "BEACON";
-    private static final int BATCH_SIZE = 60;
+    private static final int BATCH_SIZE = 100;
     int pointCount = 0;
     final int UPDATE_INTERVAL_MS = 1000;
     private boolean scanning = false;
@@ -245,8 +245,6 @@ public class MainActivity extends AppCompatActivity {
                 if (beaconRuntime == null) {
                     beaconRuntime = new BeaconRuntime(beacon, 0, 0, new CombinedSmoother());
                     beaconRuntimeMap.put(beaconId,beaconRuntime);
-                    txtStatus.append("scanProcess():   new beacon add to map: "+ beaconId);
-                    txtStatus.append("scanProcess():   current map size: "+ beaconRuntimeMap.size());
                 }
 
                 beaconRuntime.smoother.addSingleRssi(rssi);
@@ -269,17 +267,13 @@ public class MainActivity extends AppCompatActivity {
         timer.postDelayed(new Runnable() {
             @Override
             public void run() {
-                txtStatus.append("PositioningProcess():   start positioning");
 
-                final long FRESH_MS = 2000;
+                final long FRESH_MS = 3000;
                 final int  MIN_SAMPLES = 3;
                 long now = System.currentTimeMillis();
 
                 ArrayList<String> effectiveBeacons = new ArrayList<>();
                 //filter beacons:
-                txtStatus.append("PositioningProcess():   start filtering");
-                pointCount++;
-
                 for (String id : beaconRuntimeMap.keySet()) {
 
                     BeaconRuntime b = beaconRuntimeMap.get(id);
@@ -291,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
                     effectiveBeacons.add(id);
                 }
+
                 effectiveBeacons.sort((b1, b2) -> Double.compare(beaconRuntimeMap.get(b2).rssi, beaconRuntimeMap.get(b1).rssi));
 
                 final int N_MAX = 10, N_MIN = 4;
@@ -300,21 +295,19 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (effectiveBeacons.size() >= N_MIN) {
-                    txtStatus.append("PositioningProcess():   effective beacons >= MIN");
                     ArrayList<BeaconRuntime> temp = new ArrayList<>();
                     for (String id : effectiveBeacons) {
                         BeaconRuntime b = beaconRuntimeMap.get(id);
                         if (b != null) temp.add(b);
                     }
 
-                    txtStatus.append("PositioningProcess():   start estimating");
                     LocationEstimate locationEstimate = locationEstimator.estimate(temp);
 
-                    txtStatus.append("PositioningProcess():   start kalman filter");
                     TrackPoint p = kalmanAdaptiveFilter.step(locationEstimate.x, locationEstimate.y, locationEstimate.timeStamp,locationEstimate.effectiveBeacons,locationEstimate.rms);
 
                     pointBuffer.add(p);
-
+                    pointCount++;
+                    txtCount.setText("Point Counter: " + pointCount);
 
                     if (pointBuffer.size() >= BATCH_SIZE) {
 
@@ -332,26 +325,24 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     txtStatus.append("PositioningProcess():   effective beacons not enough, only has "+effectiveBeacons.size());
                     // TODO: Back up functions: FLP, Centroid...
+                    timer.postDelayed(this, UPDATE_INTERVAL_MS);
                 }
                 timer.postDelayed(this, UPDATE_INTERVAL_MS);
             }
         }, UPDATE_INTERVAL_MS);}
 
     void saveBatchToFile(TrackBatch batch) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(batch);
-
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
-            File out = new File(dir, batch.batchId + ".json");
-            if (!dir.exists()) dir.mkdirs();
-
-            try (FileWriter writer = new FileWriter(out)) {
-                writer.write(json);
-                txtStatus.append("saveBatchToFile():   saved");
-            } catch (IOException e) {
-                Log.e("TRACK", "Failed to write batch file", e);
-            }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(batch);
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File out = new File(dir, batch.batchId + ".json");
+        if (!dir.exists()) dir.mkdirs();
+        try (FileWriter writer = new FileWriter(out)) {
+            writer.write(json);
+            txtStatus.append("saveBatchToFile():   saved");
+        } catch (IOException e) {
+            Log.e("TRACK", "Failed to write batch file", e);
+        }
     }
 
     private void createAndStartPostingThread(String json){
