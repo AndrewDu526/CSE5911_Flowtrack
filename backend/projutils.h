@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cmath>
 #include <random>
+#include <simdjson>
 
 constexpr float MAX_FLOAT = std::numeric_limits<float>::max();
 
@@ -29,6 +30,14 @@ struct Data {
         return x == other.x && y == other.y;
     }
 };
+
+struct Polygon {
+    std::string         room_tag;
+    std::vector<Data>   coords;
+
+    Polygon& operator=(const Polygon&) = default;
+    Polygon& operator=(Polygon&&) noexcept = default;
+}
 
 
 #endif
