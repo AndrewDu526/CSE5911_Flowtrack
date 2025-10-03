@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class RoomMatchingModule {
     private final MapLoadingModule loader;
-    private final double epsBoundary = 0.001;
+    private final double epsBoundary = 0.5;
 
     public RoomMatchingModule(MapLoadingModule loader) {this.loader = loader;}
 
@@ -45,22 +45,23 @@ public class RoomMatchingModule {
             }
         }
         RoomGeom roomGeom = hits.isEmpty() ? null : hits.get(0);
+        if (hits.isEmpty()) {
+            double minDist = Double.MAX_VALUE;
+            RoomGeom nearest = null;
 
-
-        if (!hits.isEmpty()) {
-            List<RoomGeom> inside = new ArrayList<>();
-            List<RoomGeom> near = new ArrayList<>();
-            for (RoomGeom g : hits) {
-                if (g.prepared.covers(p)) inside.add(g);
-                else near.add(g);
+            // rooms
+            for (RoomGeom g : loader.rooms().values()) {
+                double d = g.polygon.distance(p);
+                if (d < minDist) {
+                    minDist = d;
+                    nearest = g;
+                }
             }
 
-            if (!inside.isEmpty()) {
-                roomGeom = Collections.max(inside, Comparator.comparingDouble(g -> g.polygon.getExteriorRing().distance(p))
-                );
+            if (minDist <= 0.8) {
+                roomGeom = nearest;
             } else {
-                roomGeom = Collections.min(near, Comparator.comparingDouble(g -> g.polygon.distance(p))
-                );
+                roomGeom = null; // too far
             }
         }
 

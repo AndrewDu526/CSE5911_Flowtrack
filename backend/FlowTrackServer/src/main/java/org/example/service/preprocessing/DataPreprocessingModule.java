@@ -10,8 +10,8 @@ import java.util.List;
 
 public class DataPreprocessingModule {
 
-    private final double samePointEps = 1e-6;
-    private final double worstAcurracy = 5;
+    private final double samePointEps = 0.1;
+    private final double worstAcurracy = 4;
     private final double maxVelocity = 3;
     private final double mapMinX = -160;
     private final double mapMaxX = 240;
@@ -54,7 +54,7 @@ public class DataPreprocessingModule {
                 currentTs = p.time;
                 best = p;
             } else {
-                double a1 = (best != null) ? best.rms : null;
+                double a1 = (best != null) ? best.rms : Double.MAX_VALUE;
                 double a2 = p.rms;
                 boolean takeNew = a2 < a1;
                 if (takeNew) best = p;

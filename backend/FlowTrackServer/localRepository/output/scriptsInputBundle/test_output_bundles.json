@@ -11,10 +11,70 @@
   },
   "stay_segments" : [ {
     "room_id" : "room_B",
-    "start_t" : 1759401170551,
-    "end_t" : 1759401217958,
-    "duration_s" : 47.407
+    "start_t" : 1759446841562,
+    "end_t" : 1759446853740,
+    "duration_s" : 12.178
+  }, {
+    "room_id" : "room_A",
+    "start_t" : 1759446854702,
+    "end_t" : 1759446928389,
+    "duration_s" : 73.687
+  }, {
+    "room_id" : "room_B",
+    "start_t" : 1759446928416,
+    "end_t" : 1759446995761,
+    "duration_s" : 67.345
+  }, {
+    "room_id" : "room_C",
+    "start_t" : 1759446996380,
+    "end_t" : 1759447028631,
+    "duration_s" : 32.251
+  }, {
+    "room_id" : "room_A",
+    "start_t" : 1759447029107,
+    "end_t" : 1759447051261,
+    "duration_s" : 22.154
   } ],
-  "r_transitions" : [ ],
-  "rs_aggregated" : [ ]
+  "r_transitions" : [ {
+    "from" : "room_B",
+    "to" : "room_A",
+    "at" : 1759446854702
+  }, {
+    "from" : "room_A",
+    "to" : "room_B",
+    "at" : 1759446928416
+  }, {
+    "from" : "room_B",
+    "to" : "room_C",
+    "at" : 1759446996380
+  }, {
+    "from" : "room_C",
+    "to" : "room_A",
+    "at" : 1759447029107
+  } ],
+  "rs_aggregated" : [ {
+    "from" : "room_B",
+    "to" : "room_A",
+    "count_trips" : 1,
+    "total_travel_s" : 0.962,
+    "avg_travel_s" : 0.962
+  }, {
+    "from" : "room_A",
+    "to" : "room_B",
+    "count_trips" : 1,
+    "total_travel_s" : 0.027,
+    "avg_travel_s" : 0.027
+  }, {
+    "from" : "room_B",
+    "to" : "room_C",
+    "count_trips" : 1,
+    "total_travel_s" : 0.619,
+    "avg_travel_s" : 0.619
+  }, {
+    "from" : "room_C",
+    "to" : "room_A",
+    "count_trips" : 1,
+    "total_travel_s" : 0.476,
+    "avg_travel_s" : 0.476
+  } ]
 }

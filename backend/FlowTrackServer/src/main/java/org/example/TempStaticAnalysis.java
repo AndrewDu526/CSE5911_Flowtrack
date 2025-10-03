@@ -33,7 +33,7 @@ public class TempStaticAnalysis {
     DataPreprocessingModule preprocessor = new DataPreprocessingModule();
     MapLoadingModule mapLoader = new MapLoadingModule(repo);
     RoomMatchingModule roomMatcher = new RoomMatchingModule(mapLoader);
-    DataPostprocessingModule postprocessor = new DataPostprocessingModule(3, 1500, 10000);
+    DataPostprocessingModule postprocessor = new DataPostprocessingModule(5, 4000, 6000);
 
     List<Batch> batches = repo.loadBatches("localRepository/input/batches", 8);
 
