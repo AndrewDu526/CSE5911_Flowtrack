@@ -1,6 +1,5 @@
 #include "clustering.h"
 
-/*
 int main() {
     std::mt19937 rng(static_cast<unsigned>(time(0))); // Mersenne Twister engine
     
@@ -51,7 +50,7 @@ int main() {
 
     return 0;
 }
-*/
+
 
 std::vector<std::vector<Data>> kMeans(const int k, std::vector<Data> vec) {
     const int runs = 10;
