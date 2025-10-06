@@ -1,7 +1,7 @@
 #ifndef CLUSTERING_H
 #define CLUSTERING_H
 
-#include "./../projutils.h"
+#include "projutils.h"
 
 struct DistIndx {
     float _dist;

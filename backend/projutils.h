@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <cmath>
 #include <random>
-#include <simdjson>
 
 constexpr float MAX_FLOAT = std::numeric_limits<float>::max();
 
