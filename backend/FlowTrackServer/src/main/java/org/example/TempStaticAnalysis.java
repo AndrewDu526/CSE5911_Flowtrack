@@ -9,6 +9,7 @@ import org.example.model.point.RawPoint;
 import org.example.model.point.TaggedPoint;
 import org.example.repository.LocalRepository;
 import org.example.repository.impl.LocalRepositoryImpl;
+import org.example.service.generating.GeneratingModule;
 import org.example.service.postprocessing.DataPostprocessingModule;
 import org.example.service.preprocessing.DataPreprocessingModule;
 import org.example.service.tagging.MapLoadingModule;
@@ -34,6 +35,7 @@ public class TempStaticAnalysis {
     MapLoadingModule mapLoader = new MapLoadingModule(repo);
     RoomMatchingModule roomMatcher = new RoomMatchingModule(mapLoader);
     DataPostprocessingModule postprocessor = new DataPostprocessingModule(5, 4000, 6000);
+    GeneratingModule reportGenerator = new GeneratingModule();
 
     List<Batch> batches = repo.loadBatches("localRepository/input/batches", 8);
 
@@ -60,5 +62,7 @@ public class TempStaticAnalysis {
 
     System.out.println("Wrote bundle to: " + outFile.toAbsolutePath());
     System.out.println("Working dir was: " + System.getProperty("user.dir"));
+
+    reportGenerator.generate();
     }
 }
