@@ -7,7 +7,6 @@ import java.util.*;
 
 public class DataPostprocessingModule {
 
-
     /** continually hit a new room counter */
     private final int L;
     /** continually hit a new room timer (ms) */
@@ -49,9 +48,14 @@ public class DataPostprocessingModule {
         List<StaySegment> segments = new ArrayList<>();
         if (pts == null || pts.isEmpty()) return segments;
 
-        String curRoom = firstNonNullRoom(pts);
-        int curStartIdx = 0; // start_t
+        // ---- 改动 #1：扩大起点投票窗口 ----
+        String curRoom = initialMajorityRoom(pts, /*windowMs*/ 180000L, /*maxPts*/ 300);
+        if (curRoom == null) curRoom = firstNonNullRoom(pts);
 
+        int curStartIdx = 0;
+        for (int i = 0; i < pts.size(); i++) {
+            if (eq(pts.get(i).room, curRoom)) { curStartIdx = i; break; }
+        }
 
         String candidateRoom = null; // new room try to switch
         int countNew = 0;            // continual hits on new room
@@ -79,10 +83,10 @@ public class DataPostprocessingModule {
                 countNew++;
             }
 
-            // check hysteresis conditions
+            // ---- 改动 #2：允许“快切换 或 慢切换”触发 ----
             boolean passByCount = (countNew >= L);
             boolean passByTime  = (p.t - firstNewT >= tauMs);
-            if (passByCount || passByTime) {
+            if (passByCount || passByTime) {  // 修改 && 为 ||
 
                 int endIdx = Math.max(i - 1, curStartIdx);
                 segments.add(makeSegment(pts, curRoom, curStartIdx, endIdx));
@@ -137,7 +141,38 @@ public class DataPostprocessingModule {
             StaySegment prev = (i > 0) ? s.get(i - 1) : null;
             StaySegment next = (i + 1 < s.size()) ? s.get(i + 1) : null;
 
-            // case 1: A-B-A，B is regard as A
+            // ---- 改动 #3：新增门口抖动快速合并 (A-B-A 且 B<5s) ----
+            if (prev != null && next != null && eq(prev.room_id, next.room_id)) {
+                long curMs = (long) Math.round(cur.duration_s * 1000.0);
+                if (curMs <= 5000) { // 5 秒内视为门口抖动
+                    prev.end_t = next.end_t;
+                    prev.duration_s = Math.max(0, (prev.end_t - prev.start_t) / 1000.0);
+                    s.remove(i + 1);
+                    s.remove(i);
+                    i = Math.max(0, i - 1);
+                    continue;
+                }
+            }
+
+            // case 1
+            if (prev != null && next != null && !eq(prev.room_id, cur.room_id) && eq(prev.room_id, next.room_id)) {
+                long prevMs = (long)Math.round(prev.duration_s * 1000.0);
+                long nextMs = (long)Math.round(next.duration_s * 1000.0);
+                long curMs  = (long)Math.round(cur.duration_s  * 1000.0);
+
+                // 触发条件：当前段明显短于两侧（比如 < 两侧平均的 40%），且绝对时长也不长
+                long avgSide = (prevMs + nextMs) / 2;
+                if (curMs < 0.4 * avgSide && curMs <= Math.max(minDwellMs, 120_000)) {
+                    prev.end_t = next.end_t;
+                    prev.duration_s = Math.max(0, (prev.end_t - prev.start_t) / 1000.0);
+                    s.remove(i + 1);
+                    s.remove(i);
+                    i = Math.max(0, i - 1);
+                    continue;
+                }
+            }
+
+            // case 2: A-B-A，B is regard as A
             if (prev != null && next != null && eq(prev.room_id, next.room_id)) {
                 prev.end_t = next.end_t;
                 prev.duration_s = Math.max(0, (prev.end_t - prev.start_t) / 1000.0);
@@ -147,7 +182,7 @@ public class DataPostprocessingModule {
                 continue;
             }
 
-            // case 2: join prev
+            // case 3: join prev
             if (prev != null) {
                 prev.end_t = cur.end_t;
                 prev.duration_s = Math.max(0, (prev.end_t - prev.start_t) / 1000.0);
@@ -227,5 +262,28 @@ public class DataPostprocessingModule {
         }
 
         return new ArrayList<>(map.values());
+    }
+
+    private String initialMajorityRoom(List<TaggedPoint> pts, long windowMs, int maxPts) {
+        if (pts == null || pts.isEmpty()) return null;
+        long t0 = pts.get(0).t;
+
+        Map<String, Integer> cnt = new HashMap<>();
+        int used = 0;
+        for (TaggedPoint p : pts) {
+            if (p == null) continue;
+            if (p.t - t0 > windowMs) break;
+            if (used >= maxPts) break;
+            if (p.room != null) {
+                cnt.put(p.room, cnt.getOrDefault(p.room, 0) + 1);
+                used++;
+            }
+        }
+        String best = null;
+        int bestC = -1;
+        for (Map.Entry<String, Integer> e : cnt.entrySet()) {
+            if (e.getValue() > bestC) { bestC = e.getValue(); best = e.getKey(); }
+        }
+        return best;
     }
 }

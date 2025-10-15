@@ -1,13 +1,17 @@
-map_id,room_2320,,,,,,,,,,,,,,,,,
-floor_id,3rd floor,,,,,,,,,,,,,,,,,
-building_id,Altitude_Columbus_1150_Kinear_road,,,,,,,,,,,,,,,,,
-name,test_map_001,,,,,,,,,,,,,,,,,
-description,a 3b3b student apartment floor plan,,,,,,,,,,,,,,,,,
-units,m,,,,,,,,,,,,,,,,,
-crs,absent, ignore,,,,,,,,,,,,,,,,
-meta_version,1,,,,,,,,,,,,,,,,,
-meta_author,Changan Du,,,,,,,,,,,,,,,,,
-id,name,type,x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8
-room_A,bedroom,room,-4.064,7.112,1.524,7.112,1.524,2.794,-4.064,2.794,,,,,,,,
-room_B,meeting room,room,1.524,7.112,4.826,7.112,4.826,2.794,6.096,2.794,6.096,0,0,0,0,2.794,1.524,2.794
-room_C,study room,room,4.826,7.112,7.62,7.112,7.62,2.794,4.826,2.794,,,,,,,,
+map_id,classroom cluster,,,,,,,,,
+floor_id,3rd floor,,,,,,,,,
+building_id,osu dresse lab,,,,,,,,,
+name,test map 001,,,,,,,,,
+description,"a part of third floor in dresse lab, includes 5 rooms, 3 hallways, 1 area; placed 8 beacons",,,,,,,,,
+units,meter,,,,,,,,,
+crs,orginal, orginal,,,,,,,,
+meta_version,1,,,,,,,,,
+meta_author,FlowTrack techinal team,,,,,,,,,
+id,code,type,x1,y1,x2,y2,x3,y3,x4,y4
+room 369,369,room,2.032,25.4,11.303,25.4,11.303,18.542,2.032,18.542
+room 305,305,room,11.303,25.4,11.303,18.542,20.574,18.542,20.574,25.4
+room 357,357,room,2.032,9.271,2.032,18.542,8.89,18.542,8.89,9.271
+room 317,317,room,13.589,18.542,20.574,18.542,20.574,9.271,13.589,9.271
+hallway 1,1,hallway,0,0,0,25.4,2.032,25.4,2.032,0
+hallway 2,2,hallway,20.574,25.4,22.606,25.4,22.606,0,20.574,0
+area 1,1,area,2.032,0,2.032,2.54,20.574,2.54,20.574,0

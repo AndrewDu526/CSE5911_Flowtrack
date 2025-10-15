@@ -11,12 +11,12 @@ import java.util.List;
 public class DataPreprocessingModule {
 
     private final double samePointEps = 0.1;
-    private final double worstAcurracy = 4;
-    private final double maxVelocity = 3;
-    private final double mapMinX = -160;
-    private final double mapMaxX = 240;
-    private final double mapMinY = 0;
-    private final double mapMaxY = 280;
+    private final double worstAcurracy = 15;
+    private final double maxVelocity = 2;
+    private final double mapMinX = -10;
+    private final double mapMaxX = 40;
+    private final double mapMinY = -10;
+    private final double mapMaxY = 40;
 
 
     public List<RawPoint> merge(List<Batch> batches){

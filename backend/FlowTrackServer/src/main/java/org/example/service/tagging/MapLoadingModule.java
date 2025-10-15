@@ -36,7 +36,7 @@ public class MapLoadingModule {
     public void init() {buildOnce();}
     private void buildOnce() {
         // 1) read FloorMap
-        this.floorMap = repo.loadMapSetting("localRepository/input/maps", "test_map_001.json");
+        this.floorMap = repo.loadMapSetting("localRepository/input/maps", "test map 001.json");
 
         // 2) Room -> Polygon
         this.byId = new HashMap<String, RoomGeom>();

@@ -31,6 +31,7 @@ public class GeneratingModule {
     private static final String TRAFFIC_MATRIX_SCRIPT = SCRIPT_DIR + "traffic_matrix_generator.py";
     private static final String HEATMAP_SCRIPT = SCRIPT_DIR + "heat_map_generator.py";
     private static final String SPAGHETTI_SCRIPT = SCRIPT_DIR + "spaghetti_map_generator.py";
+    private static final String COMBINED_SCRIPT = SCRIPT_DIR + "spaghetti_heat_combined_map_generator.py";
 
     // Default repository structure
     private final String BASE_DIR;
@@ -39,6 +40,7 @@ public class GeneratingModule {
     private final String MATRIX_OUTPUT;
     private final String HEATMAP_OUTPUT;
     private final String SPAGHETTI_OUTPUT;
+    private final String SPAGHETTI_HEATMAP_COMBINED_OUTPUT;
 
     /**
      * Default constructor: initializes all paths automatically
@@ -46,11 +48,12 @@ public class GeneratingModule {
      */
     public GeneratingModule() {
         this.BASE_DIR = "D:\\workspace\\monorepo\\FlowTrack\\backend\\FlowTrackServer\\localRepository";
-        this.MAP_PATH = BASE_DIR + "\\input\\maps\\test_map_001.json";
+        this.MAP_PATH = BASE_DIR + "\\input\\maps\\test map 001.json";
         this.BUNDLE_PATH = BASE_DIR + "\\output\\scriptsInputBundle\\test_output_bundles.json";
         this.MATRIX_OUTPUT = BASE_DIR + "\\output\\report\\trafficmatrix";
         this.HEATMAP_OUTPUT = BASE_DIR + "\\output\\report\\heatmap";
         this.SPAGHETTI_OUTPUT = BASE_DIR + "\\output\\report\\spaghettimap";
+        this.SPAGHETTI_HEATMAP_COMBINED_OUTPUT = BASE_DIR + "\\output\\report\\spaghettiheatcombined";
     }
 
     /**
@@ -63,6 +66,7 @@ public class GeneratingModule {
         this.MATRIX_OUTPUT = baseDir + "\\output\\report\\trafficmatrix";
         this.HEATMAP_OUTPUT = baseDir + "\\output\\report\\heatmap";
         this.SPAGHETTI_OUTPUT = baseDir + "\\output\\report\\spaghetti";
+        this.SPAGHETTI_HEATMAP_COMBINED_OUTPUT = baseDir + "\\output\\report\\spaghettiheatcombined";
     }
 
     /**
@@ -73,9 +77,20 @@ public class GeneratingModule {
         trafficMatrixGenerator(MAP_PATH, BUNDLE_PATH, MATRIX_OUTPUT);
         heatMapGenerator(MAP_PATH, BUNDLE_PATH, HEATMAP_OUTPUT);
         spaghettiMapGenerator(MAP_PATH, BUNDLE_PATH, SPAGHETTI_OUTPUT);
+        spaghettiHeatCombinedMapGenerator(MAP_PATH, BUNDLE_PATH,SPAGHETTI_HEATMAP_COMBINED_OUTPUT);
         System.out.println("=== All visualizations generated successfully ===");
     }
 
+    /**
+     * Run combined_generator.py to generate integrated heatmap + flow visualization.
+     *
+     * @param mapPath    Path to map JSON file.
+     * @param bundlePath Path to postprocessed bundle JSON file.
+     * @param outputDir  Directory for generated combined report.
+     */
+    public void spaghettiHeatCombinedMapGenerator(String mapPath, String bundlePath, String outputDir) {
+        runPythonScript("combined_generator.py", COMBINED_SCRIPT, mapPath, bundlePath, outputDir);
+    }
 
     /**
      * Run traffic_matrix.py to generate transition and travel-time matrices.

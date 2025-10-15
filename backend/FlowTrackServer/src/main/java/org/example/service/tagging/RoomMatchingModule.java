@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class RoomMatchingModule {
     private final MapLoadingModule loader;
-    private final double epsBoundary = 0.5;
+    private final double epsBoundary = 0.15;
 
     public RoomMatchingModule(MapLoadingModule loader) {this.loader = loader;}
 
@@ -58,7 +58,7 @@ public class RoomMatchingModule {
                 }
             }
 
-            if (minDist <= 0.8) {
+            if (minDist <= 0.3) {
                 roomGeom = nearest;
             } else {
                 roomGeom = null; // too far

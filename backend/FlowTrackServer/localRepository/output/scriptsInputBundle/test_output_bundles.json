@@ -10,71 +10,272 @@
     }
   },
   "stay_segments" : [ {
-    "room_id" : "room_B",
-    "start_t" : 1759446841562,
-    "end_t" : 1759446853740,
-    "duration_s" : 12.178
+    "room_id" : "room 305",
+    "start_t" : 1760406157381,
+    "end_t" : 1760406642134,
+    "duration_s" : 484.753
   }, {
-    "room_id" : "room_A",
-    "start_t" : 1759446854702,
-    "end_t" : 1759446928389,
-    "duration_s" : 73.687
+    "room_id" : "hallway 2",
+    "start_t" : 1760406645148,
+    "end_t" : 1760406904174,
+    "duration_s" : 259.026
   }, {
-    "room_id" : "room_B",
-    "start_t" : 1759446928416,
-    "end_t" : 1759446995761,
-    "duration_s" : 67.345
+    "room_id" : "room 305",
+    "start_t" : 1760406907186,
+    "end_t" : 1760407012614,
+    "duration_s" : 105.428
   }, {
-    "room_id" : "room_C",
-    "start_t" : 1759446996380,
-    "end_t" : 1759447028631,
-    "duration_s" : 32.251
+    "room_id" : "room 369",
+    "start_t" : 1760407015621,
+    "end_t" : 1760407193276,
+    "duration_s" : 177.655
   }, {
-    "room_id" : "room_A",
-    "start_t" : 1759447029107,
-    "end_t" : 1759447051261,
-    "duration_s" : 22.154
+    "room_id" : "room 317",
+    "start_t" : 1760407196289,
+    "end_t" : 1760407697249,
+    "duration_s" : 500.96
+  }, {
+    "room_id" : "hallway 2",
+    "start_t" : 1760407700260,
+    "end_t" : 1760409443274,
+    "duration_s" : 1743.014
+  }, {
+    "room_id" : "hallway 1",
+    "start_t" : 1760409446289,
+    "end_t" : 1760409533568,
+    "duration_s" : 87.279
+  }, {
+    "room_id" : "room 357",
+    "start_t" : 1760409536573,
+    "end_t" : 1760409650969,
+    "duration_s" : 114.396
+  }, {
+    "room_id" : "room 317",
+    "start_t" : 1760409653976,
+    "end_t" : 1760409780339,
+    "duration_s" : 126.363
+  }, {
+    "room_id" : "room 305",
+    "start_t" : 1760409783350,
+    "end_t" : 1760409903778,
+    "duration_s" : 120.428
+  }, {
+    "room_id" : "room 317",
+    "start_t" : 1760409906787,
+    "end_t" : 1760410003109,
+    "duration_s" : 96.322
+  }, {
+    "room_id" : "room 305",
+    "start_t" : 1760410006119,
+    "end_t" : 1760410171763,
+    "duration_s" : 165.644
+  }, {
+    "room_id" : "room 357",
+    "start_t" : 1760410174772,
+    "end_t" : 1760410460765,
+    "duration_s" : 285.993
+  }, {
+    "room_id" : "hallway 1",
+    "start_t" : 1760410463776,
+    "end_t" : 1760410698593,
+    "duration_s" : 234.817
+  }, {
+    "room_id" : "room 357",
+    "start_t" : 1760410701602,
+    "end_t" : 1760410912351,
+    "duration_s" : 210.749
+  }, {
+    "room_id" : "hallway 1",
+    "start_t" : 1760410915361,
+    "end_t" : 1760411047881,
+    "duration_s" : 132.52
+  }, {
+    "room_id" : "room 369",
+    "start_t" : 1760411050891,
+    "end_t" : 1760411436173,
+    "duration_s" : 385.282
+  }, {
+    "room_id" : "area 1",
+    "start_t" : 1760411439183,
+    "end_t" : 1760411818459,
+    "duration_s" : 379.276
+  }, {
+    "room_id" : "room 317",
+    "start_t" : 1760411821466,
+    "end_t" : 1760412574110,
+    "duration_s" : 752.644
+  }, {
+    "room_id" : "hallway 2",
+    "start_t" : 1760412577122,
+    "end_t" : 1760412727629,
+    "duration_s" : 150.507
   } ],
   "r_transitions" : [ {
-    "from" : "room_B",
-    "to" : "room_A",
-    "at" : 1759446854702
+    "from" : "room 305",
+    "to" : "hallway 2",
+    "at" : 1760406645148
   }, {
-    "from" : "room_A",
-    "to" : "room_B",
-    "at" : 1759446928416
+    "from" : "hallway 2",
+    "to" : "room 305",
+    "at" : 1760406907186
   }, {
-    "from" : "room_B",
-    "to" : "room_C",
-    "at" : 1759446996380
+    "from" : "room 305",
+    "to" : "room 369",
+    "at" : 1760407015621
   }, {
-    "from" : "room_C",
-    "to" : "room_A",
-    "at" : 1759447029107
+    "from" : "room 369",
+    "to" : "room 317",
+    "at" : 1760407196289
+  }, {
+    "from" : "room 317",
+    "to" : "hallway 2",
+    "at" : 1760407700260
+  }, {
+    "from" : "hallway 2",
+    "to" : "hallway 1",
+    "at" : 1760409446289
+  }, {
+    "from" : "hallway 1",
+    "to" : "room 357",
+    "at" : 1760409536573
+  }, {
+    "from" : "room 357",
+    "to" : "room 317",
+    "at" : 1760409653976
+  }, {
+    "from" : "room 317",
+    "to" : "room 305",
+    "at" : 1760409783350
+  }, {
+    "from" : "room 305",
+    "to" : "room 317",
+    "at" : 1760409906787
+  }, {
+    "from" : "room 317",
+    "to" : "room 305",
+    "at" : 1760410006119
+  }, {
+    "from" : "room 305",
+    "to" : "room 357",
+    "at" : 1760410174772
+  }, {
+    "from" : "room 357",
+    "to" : "hallway 1",
+    "at" : 1760410463776
+  }, {
+    "from" : "hallway 1",
+    "to" : "room 357",
+    "at" : 1760410701602
+  }, {
+    "from" : "room 357",
+    "to" : "hallway 1",
+    "at" : 1760410915361
+  }, {
+    "from" : "hallway 1",
+    "to" : "room 369",
+    "at" : 1760411050891
+  }, {
+    "from" : "room 369",
+    "to" : "area 1",
+    "at" : 1760411439183
+  }, {
+    "from" : "area 1",
+    "to" : "room 317",
+    "at" : 1760411821466
+  }, {
+    "from" : "room 317",
+    "to" : "hallway 2",
+    "at" : 1760412577122
   } ],
   "rs_aggregated" : [ {
-    "from" : "room_B",
-    "to" : "room_A",
+    "from" : "room 305",
+    "to" : "hallway 2",
     "count_trips" : 1,
-    "total_travel_s" : 0.962,
-    "avg_travel_s" : 0.962
+    "total_travel_s" : 3.014,
+    "avg_travel_s" : 3.014
   }, {
-    "from" : "room_A",
-    "to" : "room_B",
+    "from" : "hallway 2",
+    "to" : "room 305",
     "count_trips" : 1,
-    "total_travel_s" : 0.027,
-    "avg_travel_s" : 0.027
+    "total_travel_s" : 3.012,
+    "avg_travel_s" : 3.012
   }, {
-    "from" : "room_B",
-    "to" : "room_C",
+    "from" : "room 305",
+    "to" : "room 369",
     "count_trips" : 1,
-    "total_travel_s" : 0.619,
-    "avg_travel_s" : 0.619
+    "total_travel_s" : 3.007,
+    "avg_travel_s" : 3.007
   }, {
-    "from" : "room_C",
-    "to" : "room_A",
+    "from" : "room 369",
+    "to" : "room 317",
     "count_trips" : 1,
-    "total_travel_s" : 0.476,
-    "avg_travel_s" : 0.476
+    "total_travel_s" : 3.013,
+    "avg_travel_s" : 3.013
+  }, {
+    "from" : "room 317",
+    "to" : "hallway 2",
+    "count_trips" : 2,
+    "total_travel_s" : 6.023,
+    "avg_travel_s" : 3.0115
+  }, {
+    "from" : "hallway 2",
+    "to" : "hallway 1",
+    "count_trips" : 1,
+    "total_travel_s" : 3.015,
+    "avg_travel_s" : 3.015
+  }, {
+    "from" : "hallway 1",
+    "to" : "room 357",
+    "count_trips" : 2,
+    "total_travel_s" : 6.013999999999999,
+    "avg_travel_s" : 3.0069999999999997
+  }, {
+    "from" : "room 357",
+    "to" : "room 317",
+    "count_trips" : 1,
+    "total_travel_s" : 3.007,
+    "avg_travel_s" : 3.007
+  }, {
+    "from" : "room 317",
+    "to" : "room 305",
+    "count_trips" : 2,
+    "total_travel_s" : 6.021,
+    "avg_travel_s" : 3.0105
+  }, {
+    "from" : "room 305",
+    "to" : "room 317",
+    "count_trips" : 1,
+    "total_travel_s" : 3.009,
+    "avg_travel_s" : 3.009
+  }, {
+    "from" : "room 305",
+    "to" : "room 357",
+    "count_trips" : 1,
+    "total_travel_s" : 3.009,
+    "avg_travel_s" : 3.009
+  }, {
+    "from" : "room 357",
+    "to" : "hallway 1",
+    "count_trips" : 2,
+    "total_travel_s" : 6.021,
+    "avg_travel_s" : 3.0105
+  }, {
+    "from" : "hallway 1",
+    "to" : "room 369",
+    "count_trips" : 1,
+    "total_travel_s" : 3.01,
+    "avg_travel_s" : 3.01
+  }, {
+    "from" : "room 369",
+    "to" : "area 1",
+    "count_trips" : 1,
+    "total_travel_s" : 3.01,
+    "avg_travel_s" : 3.01
+  }, {
+    "from" : "area 1",
+    "to" : "room 317",
+    "count_trips" : 1,
+    "total_travel_s" : 3.007,
+    "avg_travel_s" : 3.007
   } ]
 }
