@@ -53,7 +53,7 @@ public class WeightedLeastSquareEstimator implements LocationEstimator {
         y = initialLocationEstimate.y;
 
 
-        for (int iter = 0; iter < 3; iter++) {
+        for (int iter = 0; iter < 5; iter++) {
             double Axx = 0, Axy = 0, Ayy = 0;
             double bx  = 0, by  = 0;
 

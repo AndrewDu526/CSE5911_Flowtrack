@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "http://100.110.147.24:18081"; // local url, depends on your local server address
     private static final String POST_PATH = "/FlowTrackServerListenerToMobile"; // port path
     private static final String TAG = "BEACON";
-    private static final int BATCH_SIZE = 100;
+    private static final int BATCH_SIZE = 300;
     int pointCount = 0;
-    final int UPDATE_INTERVAL_MS = 1000;
+    final int UPDATE_INTERVAL_MS = 3000;
     private boolean scanning = false;
 
     private Button btnStart, btnStop;
@@ -134,12 +134,20 @@ public class MainActivity extends AppCompatActivity {
     private void initialBeacons() {
         String uuid = "426c7565-4368-6172-6d42-6561636f6e73";
 
-        StaticBeacon beacon1 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,1), "test_beacon_1_bedroom", -160*0.0254,280*0.0254);
-        StaticBeacon beacon2 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,2), "test_beacon_1_bedroom", 155*0.0254,258*0.0254);
-        StaticBeacon beacon3 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,3), "test_beacon_1_bedroom", 300*0.0254,280*0.0254);
-        StaticBeacon beacon4 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,4), "test_beacon_1_bedroom", 60*0.0254,110*0.0254);
-        StaticBeacon beacon5 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,5), "test_beacon_1_bedroom", 0,0);
-        StaticBeacon beacon6 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,6), "test_beacon_1_bedroom", 240*0.0254,0);
+        StaticBeacon beacon1 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,1), "b1", 11.303, 25.4);
+        StaticBeacon beacon2 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,2), "b2", 2.032,18.542);
+        StaticBeacon beacon3 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,3), "b3", 20.574,25.4);
+        StaticBeacon beacon4 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,4), "b4", 9.271,6.737);
+        StaticBeacon beacon5 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,5), "b5", 8.89,18.542);
+        StaticBeacon beacon6 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,6), "b6", 2.032,9.271);
+        StaticBeacon beacon7 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,7), "b7", 20.574,9.271);
+        StaticBeacon beacon8 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,8), "b8", 13.589,18.542);
+        StaticBeacon beacon9 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,9), "b9", 11.303,2.54);
+        StaticBeacon beacon10 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,10), "b10", 11.303,0);
+        StaticBeacon beacon11 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,11), "b11", 0,25.4);
+        StaticBeacon beacon12 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,12), "b12", 0,0);
+        StaticBeacon beacon13 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,13), "b13", 22.606,25.4);
+        StaticBeacon beacon14 = new StaticBeacon(new BeaconId("ibeacon",uuid,10001,14), "b14", 22.606,0);
 
         beaconRepository.put(beacon1.id.toString(), beacon1);
         beaconRepository.put(beacon2.id.toString(), beacon2);
@@ -147,7 +155,14 @@ public class MainActivity extends AppCompatActivity {
         beaconRepository.put(beacon4.id.toString(), beacon4);
         beaconRepository.put(beacon5.id.toString(), beacon5);
         beaconRepository.put(beacon6.id.toString(), beacon6);
-
+        beaconRepository.put(beacon6.id.toString(), beacon7);
+        beaconRepository.put(beacon6.id.toString(), beacon8);
+        beaconRepository.put(beacon6.id.toString(), beacon9);
+        beaconRepository.put(beacon6.id.toString(), beacon10);
+        beaconRepository.put(beacon6.id.toString(), beacon11);
+        beaconRepository.put(beacon6.id.toString(), beacon12);
+        beaconRepository.put(beacon6.id.toString(), beacon13);
+        beaconRepository.put(beacon6.id.toString(), beacon14);
     }
 
     private void tryStart() {
@@ -218,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
     private final ScanCallback scanCb = new ScanCallback() {
         @Override public void onScanResult(int callbackType, @NonNull ScanResult r) { scanProcess(r); }
         @Override public void onScanFailed(int errorCode) {
-            txtStatus.append("scanCb():   fail");
+            txtStatus.append("scanCb():  fail");
         }
     };
 

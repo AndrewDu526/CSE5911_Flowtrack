@@ -19,12 +19,12 @@ import org.apache.commons.math3.linear.*;
  */
 public class KalmanAdaptiveFilter {
 
-    private double measStdBase = 2.5;     // 基础量测标准差（米） -> R_base = diag(σ^2, σ^2)
-    private double accelStd    = 1.2;     // 过程噪声：加速度标准差（m/s^2）
+    private double measStdBase = 2;     // 基础量测标准差（米） -> R_base = diag(σ^2, σ^2)
+    private double accelStd    = 2;     // 过程噪声：加速度标准差（m/s^2）
     private double initPosStd  = 3.0;     // 初始位置标准差（米）
     private double initVelStd  = 1.0;     // 初始速度标准差（m/s）
-    private double gateChi2    = 16.0;    // 门控阈值（马氏距离平方），>阈值则拒绝更新
-    private double residualRef = 2.0;     // 残差参考值（米），用于自适应 R 的缩放
+    private double gateChi2    = 9.21;    // 门控阈值（马氏距离平方），>阈值则拒绝更新
+    private double residualRef = 10;     // 残差参考值（米），用于自适应 R 的缩放
 
     private KalmanFilter kf;              // Apache Commons Math 的滤波器实例
     private RealVector xState;            // 当前状态向量 [x,y,vx,vy]^T
